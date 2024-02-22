@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import dataclasses
 import re
+import datetime
 # from robobrowser import RoboBrowser
 
 
@@ -17,9 +18,10 @@ class PornLib():
     else:
       pass
   
-  def search(self, keyword=False, tag=False, limit=100):
+  def search(self, keyword=None, tag=None, best=None, limit=100):
     self.keyword = keyword
     self.tag = tag
+    self.best = best if best else f"{datetime.date.today().year}-{datetime.date.today().month}"
     self.limit = limit
     
     if self.engine == "xvideos":
@@ -50,7 +52,9 @@ class PornLib():
       if not quality: quality = False
       else: quality = int(re.sub(r"\D", "", quality.text))
       time = item.select_one(".duration").text
-      res.append(VideoDataClass(title, img, link, quality, time))
+      channel_name = item.select_one(".metadata .name").text
+      channel_link = f"https://www.xvideos.com{item.select_one(".metadata a").get("href")}"
+      res.append(VideoDataClass(title, img, link, quality, time, channel_name, channel_link))
     return res
   
   def _xvideos_search(self):
@@ -60,15 +64,18 @@ class PornLib():
     elif self.tag:
       root = self.getSoup(f"https://www.xvideos.com/c/{self.tag}")
       return self._xvideos_list(root=root)
-
+    elif self.best:
+      root = self.getSoup(f"https://www.xvideos.com/best/{self.best}")
+      return self._xvideos_list(root=root) 
+    
   def _xvideos_getDownloadLink(self, url):
     root = self.getSoup(url)
     script = str(root.select("#video-player-bg script")[4])
     
     low = re.findall(r"setVideoUrlLow\('(.*)'", script)
-    high = re.findall(r"setVideoUrlHigh\('(.*)'", script)
+    High = re.findall(r"setVideoUrlHigh\('(.*)'", script)
     hls = re.findall(r"setVideoUrlHLS\('(.*)'", script)
-    return VideoDownloadDataClass(low, high, hls)
+    return VideoDownloadDataClass(low, High, hls)
 
 @dataclasses.dataclass
 class VideoDataClass:
@@ -77,6 +84,8 @@ class VideoDataClass:
   link: str
   quality: int
   time: str
+  channel_name: str
+  channel_link: str
 
 @dataclasses.dataclass
 class VideoDownloadDataClass:
