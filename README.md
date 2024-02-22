@@ -1,6 +1,6 @@
 # porn-lib-python
 
-Nodejs version reconstituted version https://github.com/sofia-gros/porn-lib
+Past Libraries Node.js https://github.com/sofia-gros/porn-lib
 
 The python version is superior in speed.
 The download function and thumbnail acquisition were broken in the nodejs version, but we fixed it here.
