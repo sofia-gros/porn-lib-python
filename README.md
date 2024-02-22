@@ -17,6 +17,7 @@ for item in list:
 
 list = xvideos.list(keyword="cute") # same
 list = xvideos.list(tag="Asian_Woman-32") # same
+list = xvideos.list(best="2024-01") # same
 
 link = xvideos.getDownloadLink( list[0].link ) # xvideos video url 
 # link == VideoDownloadDataClass
@@ -31,6 +32,8 @@ class VideoDataClass:
   link: str
   quality: int
   time: str
+  channel_name: str
+  channel_link: str
 
 @dataclasses.dataclass
 class VideoDownloadDataClass:
