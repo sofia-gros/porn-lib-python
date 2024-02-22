@@ -15,9 +15,9 @@ list = xvideos.list(limit=12)
 for item in list:
   # item == VideoDataClass
 
-list = xvideos.list(keyword="cute") # same
-list = xvideos.list(tag="Asian_Woman-32") # same
-list = xvideos.list(best="2024-01") # same
+list = xvideos.search(keyword="cute") # same
+list = xvideos.search(tag="Asian_Woman-32") # same
+list = xvideos.search(best="2024-01") # same
 
 link = xvideos.getDownloadLink( list[0].link ) # xvideos video url 
 # link == VideoDownloadDataClass
