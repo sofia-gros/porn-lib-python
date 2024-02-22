@@ -7,7 +7,18 @@ The download function and thumbnail acquisition were broken in the nodejs versio
 
 
 ```python
+import pornlib
 
+xvideos = pornlib.PornLib(engine="xvideos")
+list = xvideos.list(limit=12)
+for item in list:
+  # item == VideoDataClass
+
+list = xvideos.list(keyword="cute") # same
+list = xvideos.list(tag="Asian_Woman-32") # same
+
+link = xvideos.getDownloadLink( list[0].link ) # xvideos video url 
+# link == VideoDownloadDataClass
 ```
 
 
