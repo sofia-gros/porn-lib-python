@@ -35,6 +35,6 @@ class VideoDataClass:
 @dataclasses.dataclass
 class VideoDownloadDataClass:
   low: str | None
-  High: str | None
+  high: str | None
   hls: str | None
 ```
