@@ -66,9 +66,9 @@ class PornLib():
     script = str(root.select("#video-player-bg script")[4])
     
     low = re.findall(r"setVideoUrlLow\('(.*)'", script)
-    High = re.findall(r"setVideoUrlHigh\('(.*)'", script)
+    high = re.findall(r"setVideoUrlHigh\('(.*)'", script)
     hls = re.findall(r"setVideoUrlHLS\('(.*)'", script)
-    return VideoDownloadDataClass(low, High, hls)
+    return VideoDownloadDataClass(low, high, hls)
 
 @dataclasses.dataclass
 class VideoDataClass:
@@ -81,6 +81,6 @@ class VideoDataClass:
 @dataclasses.dataclass
 class VideoDownloadDataClass:
   low: str | None
-  High: str | None
+  high: str | None
   hls: str | None
 
