@@ -21,7 +21,7 @@ class PornLib():
   def search(self, keyword=None, tag=None, best=None, limit=100):
     self.keyword = keyword
     self.tag = tag
-    self.best = best if best else f"{datetime.date.today().year}-{datetime.date.today().month}"
+    self.best = best
     self.limit = limit
     
     if self.engine == "xvideos":
@@ -75,7 +75,7 @@ class PornLib():
     low = re.findall(r"setVideoUrlLow\('(.*)'", script)
     high = re.findall(r"setVideoUrlHigh\('(.*)'", script)
     hls = re.findall(r"setVideoUrlHLS\('(.*)'", script)
-    return VideoDownloadDataClass(low, High, hls)
+    return VideoDownloadDataClass(low, high, hls)
 
 @dataclasses.dataclass
 class VideoDataClass:
@@ -92,4 +92,3 @@ class VideoDownloadDataClass:
   low: str | None
   high: str | None
   hls: str | None
-
