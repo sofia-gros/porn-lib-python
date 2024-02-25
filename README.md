@@ -7,6 +7,13 @@ The download function and thumbnail acquisition were broken in the nodejs versio
 
 Please download and import the file or copy and paste it, as it is not uploaded to PyPI.
 
+
+[] チャンネル名で検索
+[] チャンネルの動画一覧 // チャンネル名で検索とと同じ？
+[] 他のサイトを追加する(Pornhub系は別ライブラリに任せるので対応しない)
+[] カテゴリー・タグリストの取得 
+[] webクローリングを使って別サイトに対応
+
 ```python
 import pornlib
 
