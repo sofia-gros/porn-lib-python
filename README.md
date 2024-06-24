@@ -12,6 +12,10 @@ Please download and import the file or copy and paste it, as it is not uploaded 
 - [ ] カテゴリー・タグリストの取得 
 - [ ] 他のサイトを追加する(Pornhub系は別ライブラリに任せるので対応しない)
 
+```cmd
+pip install -r requirements.txt
+```
+
 ```python
 import pornlib
 
