@@ -1,23 +1,17 @@
 # porn-lib-python
 
-Past Libraries Node.js https://github.com/sofia-gros/porn-lib
-
-The python version is superior in speed.
-The download function and thumbnail acquisition were broken in the nodejs version, but we fixed it here.
+https://github.com/sofia-gros/porn-lib-python
 
 - [x] 動画リンクからダウンロードリンクの発行
 - [x] チャンネル名で検索
 - [x] カテゴリー・タグリストの取得 
 - [ ] 他のサイトを追加する(Pornhub系は別ライブラリに任せるので対応しない)
 
-```cmd
-pip install -r requirements.txt
-```
 
 ```python
 import pornLib
 
-xvideos = PornLib(engine="xvideos")
+xvideos = pornLib.PornLib(engine="xvideos")
 # xvideos = pornlib.PornLib(engine="xvideos", soupSleep=1) # soupSleepはサイトの読み込み遅延です。サイトが重かったりネット速度が遅いときに使用します。
 list = xvideos.list(limit=12)
 for item in list:
