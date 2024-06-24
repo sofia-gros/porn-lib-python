@@ -5,8 +5,6 @@ Past Libraries Node.js https://github.com/sofia-gros/porn-lib
 The python version is superior in speed.
 The download function and thumbnail acquisition were broken in the nodejs version, but we fixed it here.
 
-Please download and import the file or copy and paste it, as it is not uploaded to PyPI.
-
 - [x] 動画リンクからダウンロードリンクの発行
 - [x] チャンネル名で検索
 - [x] カテゴリー・タグリストの取得 
