@@ -5,10 +5,14 @@ import re
 from selenium import webdriver
 import time
 
-options = webdriver.ChromeOptions()
-options.add_argument("--headless=new")
-driver = webdriver.Chrome(options=options)
-# options.set_headless(True)
+driver = None
+bs4_start = False
+def bs4_init():
+  if bs4_start is True:
+    return
+  options = webdriver.ChromeOptions()
+  options.add_argument("--headless=new")
+  driver = webdriver.Chrome(options=options)
 
 class PornLib():
   def __init__(self, engine = "xvideos", soupSleep=0.5):
@@ -22,6 +26,21 @@ class PornLib():
       return self._xvideos_list()
     else:
       pass
+  
+  def _tags(self):
+    if self.engine == "xvideos":
+      return self._xvideos_tags()
+    else:
+      pass
+  
+  def tags(self, keyword = None):
+    if keyword is None:
+      return self._tags()
+    else:
+      for tags in self._tags():
+        if re.findall(keyword, tags.name) or re.findall(keyword, tags.id):
+          return tags
+      return None
   
   def search(self, keyword=None, channel=None, tag=None, best=None, limit=100):
     self.keyword = keyword
@@ -47,6 +66,7 @@ class PornLib():
     return soup
   
   def getSeleniumSoup(self, url):
+    bs4_init()
     driver.get(url)
     time.sleep(self.soupSleep)
     html = driver.page_source.encode("utf-8")
@@ -84,6 +104,15 @@ class PornLib():
       root = self.getSoup(f"https://www.xvideos.com/best/{self.best}")
       return self._xvideos_list(root=root) 
     
+  def _xvideos_tags(self):
+    root = self.getSoup("https://www.xvideos.com/tags")
+    list = root.select("#tags li")
+    res = []
+    for item in list:
+      id = item.select_one("a b").get_text()
+      id = str.strip(id)
+      res.append(Tags(id, id))
+    return res
     
   def _xvideos_getDownloadLink(self, url):
     root = self.getSoup(url)
@@ -109,3 +138,8 @@ class VideoDownloadDataClass:
   low: str | None
   high: str | None
   hls: str | None
+
+@dataclasses.dataclass
+class Tags:
+  name: str | None
+  id: str | None

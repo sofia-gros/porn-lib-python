@@ -9,7 +9,7 @@ Please download and import the file or copy and paste it, as it is not uploaded 
 
 - [x] 動画リンクからダウンロードリンクの発行
 - [x] チャンネル名で検索
-- [ ] カテゴリー・タグリストの取得 
+- [x] カテゴリー・タグリストの取得 
 - [ ] 他のサイトを追加する(Pornhub系は別ライブラリに任せるので対応しない)
 
 ```cmd
@@ -25,9 +25,14 @@ list = xvideos.list(limit=12)
 for item in list:
   # item == VideoDataClass
 
+tags = xvideos.tags()
+tags = xvideos.tags(keyword="jap")
+# Tags or [ ...Tags ]
+
 list = xvideos.search(keyword="cute") # same
 list = xvideos.search(channel="xiaomaomi12138") # same
 list = xvideos.search(tag="Asian_Woman-32") # same
+list = xvideos.search(tag=tags) # same
 list = xvideos.search(best="2024-01") # same
 
 link = xvideos.getDownloadLink( list[0].link ) # xvideos video url 
@@ -51,4 +56,9 @@ class VideoDownloadDataClass:
   low: str | None
   high: str | None
   hls: str | None
+
+@dataclasses.dataclass
+class Tags:
+  name: str | None
+  id: str | None
 ```

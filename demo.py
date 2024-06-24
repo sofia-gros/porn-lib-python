@@ -1,8 +1,16 @@
 import pornlib
-porn = pornlib.PornLib(engine="xvideos", soupSleep=1)
-# res = porn.list(limit=10)
-# print(res)
+xvideos = pornlib.PornLib(engine="xvideos", soupSleep=1)
+list = xvideos.list(limit=12)
+for item in list:
+  pass
 
-res = porn.search(limit=10, channel="xiaomaomi12138")
-link = porn.getDownloadLink(res[0].link)
-print(link)
+tags = xvideos.tags()
+tags = xvideos.tags(keyword="jap")
+
+list = xvideos.search(keyword="cute") # same
+list = xvideos.search(channel="xiaomaomi12138") # same
+list = xvideos.search(tag="Asian_Woman-32") # same
+list = xvideos.search(tag=tags) # same
+list = xvideos.search(best="2024-01") # same
+
+link = xvideos.getDownloadLink( list[0].link ) # xvideos video url 
