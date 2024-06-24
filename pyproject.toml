@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "porn-lib"
+name = "pornLib"
 version = "1.0.0"
 description = "Get videos from porn sites"
 authors = ["sofiagros"]
