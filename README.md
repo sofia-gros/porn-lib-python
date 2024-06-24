@@ -15,9 +15,9 @@ pip install -r requirements.txt
 ```
 
 ```python
-import pornlib
+import pornLib
 
-xvideos = pornlib.PornLib(engine="xvideos")
+xvideos = PornLib(engine="xvideos")
 # xvideos = pornlib.PornLib(engine="xvideos", soupSleep=1) # soupSleepはサイトの読み込み遅延です。サイトが重かったりネット速度が遅いときに使用します。
 list = xvideos.list(limit=12)
 for item in list:
