@@ -4,12 +4,19 @@ import dataclasses
 import re
 import datetime
 # from robobrowser import RoboBrowser
+from selenium import webdriver
+import time
 
+options = webdriver.ChromeOptions()
+options.add_argument("--headless=new")
+driver = webdriver.Chrome(options=options)
+# options.set_headless(True)
 
 class PornLib():
-  def __init__(self, engine = "xvideos"):
+  def __init__(self, engine = "xvideos", soupSleep=0.5):
     self.engine = engine
-  
+    self.soupSleep = soupSleep
+
   def list(self, limit=10):
     self.limit = limit
     
@@ -18,8 +25,9 @@ class PornLib():
     else:
       pass
   
-  def search(self, keyword=None, tag=None, best=None, limit=100):
+  def search(self, keyword=None, channel=None, tag=None, best=None, limit=100):
     self.keyword = keyword
+    self.channel = channel
     self.tag = tag
     self.best = best
     self.limit = limit
@@ -39,6 +47,13 @@ class PornLib():
     request = requests.get(url)
     soup = BeautifulSoup(request.text, "html.parser")
     return soup
+  
+  def getSeleniumSoup(self, url):
+    driver.get(url)
+    time.sleep(self.soupSleep)
+    html = driver.page_source.encode("utf-8")
+    soup = BeautifulSoup(html, "html.parser")
+    return soup
 
   def _xvideos_list(self, root=False):
     if not root: root = self.getSoup("https://www.xvideos.com/")
@@ -53,7 +68,7 @@ class PornLib():
       else: quality = int(re.sub(r"\D", "", quality.text))
       time = item.select_one(".duration").text
       channel_name = item.select_one(".metadata .name").text
-      channel_link = f"https://www.xvideos.com{item.select_one(".metadata a").get("href")}"
+      channel_link = f'https://www.xvideos.com{item.select_one(".metadata a").get("href")}'
       res.append(VideoDataClass(title, img, link, quality, time, channel_name, channel_link))
     return res
   
@@ -61,12 +76,16 @@ class PornLib():
     if self.keyword:
       root = self.getSoup(f"https://www.xvideos.com/?k={self.keyword}")
       return self._xvideos_list(root=root)
+    elif self.channel:
+      root = self.getSeleniumSoup(f"https://www.xvideos.com/profiles/{self.channel}#_tabVideos")
+      return self._xvideos_list(root=root)
     elif self.tag:
       root = self.getSoup(f"https://www.xvideos.com/c/{self.tag}")
       return self._xvideos_list(root=root)
     elif self.best:
       root = self.getSoup(f"https://www.xvideos.com/best/{self.best}")
       return self._xvideos_list(root=root) 
+    
     
   def _xvideos_getDownloadLink(self, url):
     root = self.getSoup(url)
