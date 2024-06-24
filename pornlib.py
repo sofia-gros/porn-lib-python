@@ -8,6 +8,8 @@ import time
 driver = None
 bs4_start = False
 def bs4_init():
+  global bs4_start
+  global driver
   if bs4_start is True:
     return
   options = webdriver.ChromeOptions()
